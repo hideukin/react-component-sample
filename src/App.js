@@ -1,44 +1,55 @@
 import "./styles.css";
 import React, { useState } from "react";
 
-const InputRadio = () => {
-  const [checkedValue, setCheckedValue] = useState("赤");
+const InputCheckBox = () => {
+  const [checkedValues, setCheckedValues] = useState([]);
 
-  const handleChange = (e) => setCheckedValue(e.target.value);
+  const handleChange = (e) => {
+    if (checkedValues.includes(e.target.value)) {
+      setCheckedValues(
+        checkedValues.filter((checkedValue) => checkedValue !== e.target.value)
+      );
+    } else {
+      setCheckedValues([...checkedValues, e.target.value]);
+    }
+  };
 
   return (
     <div className="App">
       <p>
-        現在選択されている値: <b>{checkedValue}</b>
+        現在選択されている値: <b>{checkedValues.join(", ")}</b>
       </p>
       <label>
         <input
-          type="radio"
-          value="赤"
+          type="checkbox"
+          value="マウス"
           onChange={handleChange}
-          checked={checkedValue === "赤"}
+          checked={checkedValues.includes("マウス")}
         />
+        マウス
       </label>
       <label>
         <input
-          type="radio"
-          value="青"
+          type="checkbox"
+          value="モニター"
           onChange={handleChange}
-          checked={checkedValue === "青"}
+          checked={checkedValues.includes("モニター")}
         />
+        モニター
       </label>
       <label>
         <input
-          type="radio"
-          value="黃"
+          type="checkbox"
+          value="キーボード"
           onChange={handleChange}
-          checked={checkedValue === "黃"}
+          checked={checkedValues.includes("キーボード")}
         />
+        キーボード
       </label>
     </div>
   );
 };
 
 export default function App() {
-  return <InputRadio />;
+  return <InputCheckBox />;
 }
